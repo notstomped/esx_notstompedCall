@@ -9,23 +9,23 @@ AddEventHandler('notstomped_emergencyCall:notifyJobs', function(jobRoles, coords
         TriggerClientEvent('notstomped_emergencyCall:createBlip', -1, coords, blipColor, jobRoles, source, message)
     end
 end)
-
+-- call accepted
 RegisterServerEvent('notstomped_emergencyCall:callAccepted')
 AddEventHandler('notstomped_emergencyCall:callAccepted', function(callerId, responderJob)
     TriggerClientEvent('notstomped_emergencyCall:notifyCaller', callerId, Config.Notifications.CallAccepted[responderJob])
 end)
-
+-- call declined
 RegisterServerEvent('notstomped_emergencyCall:callRejected')
 AddEventHandler('notstomped_emergencyCall:callRejected', function(callerId)
     TriggerClientEvent('notstomped_emergencyCall:notifyCaller', callerId, Config.Notifications.CallRejected)
 end)
-
+-- call passed to other departments
 RegisterServerEvent('notstomped_emergencyCall:callPassed')
 AddEventHandler('notstomped_emergencyCall:callPassed', function(callerId, responderJob)
     TriggerClientEvent('notstomped_emergencyCall:notifyCaller', callerId, Config.Notifications.CallPassed)
 end)
 
--- End the latest active call
+-- end last call
 RegisterServerEvent('notstomped_emergencyCall:endLatestCall')
 AddEventHandler('notstomped_emergencyCall:endLatestCall', function()
     local source = source
@@ -33,7 +33,7 @@ AddEventHandler('notstomped_emergencyCall:endLatestCall', function()
 end)
 
 
--- End all active calls
+-- end all calls
 RegisterServerEvent('notstomped_emergencyCall:endAllCalls')
 AddEventHandler('notstomped_emergencyCall:endAllCalls', function()
     local source = source
