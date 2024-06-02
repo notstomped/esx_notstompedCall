@@ -2,7 +2,7 @@ local callCooldown = {}
 local activeBlips = {}
 
 
--- Utility function to create blip
+-- function to create blip
 local function createBlip(coords, color, name)
     local blip = AddBlipForCoord(coords)
     SetBlipSprite(blip, Config.Blips.Type)
@@ -12,7 +12,7 @@ local function createBlip(coords, color, name)
     AddTextComponentString(name)
     EndTextCommandSetBlipName(blip)
 
-    -- Set timer to remove blip after Config.BlipRemoveTime
+    -- blip timer (config.lua)
     Citizen.SetTimeout(Config.BlipRemoveTime * 1000, function()
         RemoveBlip(blip)
     end)
@@ -20,7 +20,7 @@ local function createBlip(coords, color, name)
     return blip
 end
 
--- Check if job exists in table
+-- check if job exists in table
 local function jobExists(job, jobTable)
     for _, v in ipairs(jobTable) do
         if v == job then
@@ -30,7 +30,7 @@ local function jobExists(job, jobTable)
     return false
 end
 
--- Ensure ESX is loaded
+-- ensure ESX is loaded (outdated)
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -38,13 +38,13 @@ Citizen.CreateThread(function()
     end
 end)
 
--- Handle call commands
+-- handle call commands
 local function handleCall(jobRoles, command, blipColor, message)
     local playerPed = PlayerPedId()
     local playerCoords = GetEntityCoords(playerPed)
     local job = ESX.GetPlayerData().job.name
 
-    -- Check cooldown
+    -- check cooldown
     if callCooldown[command] and GetGameTimer() - callCooldown[command] < Config.Cooldown * 1000 then
         local remaining = math.ceil((Config.Cooldown * 1000 - (GetGameTimer() - callCooldown[command])) / 1000)
         ESX.ShowNotification(Config.Notifications.CooldownActive:gsub("{remaining}", remaining))
@@ -58,6 +58,8 @@ local function handleCall(jobRoles, command, blipColor, message)
     callCooldown[command] = GetGameTimer()
 end
 
+
+-- command registry
 RegisterCommand('911', function(_, args)
     local message = table.concat(args, " ")
     handleCall({'police', 'metro'}, '911', Config.Blips.Colors['911'], message)
@@ -65,7 +67,7 @@ end, false)
 
 RegisterCommand('912', function(_, args)
     local message = table.concat(args, " ")
-    handleCall({'ambulance', 'police'}, '912', Config.Blips.Colors['912'], message)
+    handleCall({'ambulance'}, '912', Config.Blips.Colors['912'], message)
 end, false)
 
 RegisterCommand('909', function(_, args)
@@ -78,6 +80,8 @@ RegisterCommand('501835720', function(_, args)
     handleCall({'coiu'}, '501835720', Config.Blips.Colors['501835720'], message)
 end, false)
 
+
+-- blip call stuff
 RegisterNetEvent('notstomped_emergencyCall:createBlip')
 AddEventHandler('notstomped_emergencyCall:createBlip', function(coords, blipColor, acceptRoles, callerId, message)
     local jobs = {'hollowimport', 'ambulance', 'police', 'metro', 'coiu'}
@@ -114,6 +118,8 @@ AddEventHandler('notstomped_emergencyCall:createBlip', function(coords, blipColo
     end
 end)
 
+
+-- /end command
 RegisterCommand('end', function()
     local job = ESX.GetPlayerData().job.name
     if jobExists(job, {'police', 'ambulance', 'hollowimport', 'metro', 'coiu'}) then
@@ -133,7 +139,7 @@ AddEventHandler('notstomped_emergencyCall:endLatestCallNotification', function()
     end
 end)
 
-
+-- /endall command
 RegisterCommand('endall', function()
     local job = ESX.GetPlayerData().job.name
     if jobExists(job, {'police', 'ambulance', 'hollowimport', 'metro', 'coiu'}) then
