@@ -20,13 +20,13 @@ Config.Notifications = {
 
 -- Blip settings
 Config.Blips = {
-    Type = 1,
+    Type = 58,
     Size = 0.85,
     Colors = {
         ['911'] = 3,
         ['912'] = 1,
         ['909'] = 2,
-        ['501835720'] = 0,
+        ['501835720'] = 10,
         ['end'] = 4
     },
     Name = "Emergency"
