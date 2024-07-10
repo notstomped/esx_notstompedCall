@@ -3,7 +3,7 @@ local activeBlips = {}
 -- Notify specific jobs
 RegisterServerEvent('notstomped_emergencyCall:notifyJobs')
 AddEventHandler('notstomped_emergencyCall:notifyJobs', function(jobRoles, coords, command, blipColor, message)
-    local jobs = {'hollowimport', 'ambulance', 'police', 'metro', 'coiu'}
+    local jobs = {'dhs', 'ambulance', 'police', 'metro', 'coiu'}
     local source = source
     for _, job in ipairs(jobRoles) do
         TriggerClientEvent('notstomped_emergencyCall:createBlip', -1, coords, blipColor, jobRoles, source, message)
