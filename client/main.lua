@@ -84,7 +84,7 @@ end, false)
 -- blip call stuff
 RegisterNetEvent('notstomped_emergencyCall:createBlip')
 AddEventHandler('notstomped_emergencyCall:createBlip', function(coords, blipColor, acceptRoles, callerId, message)
-    local jobs = {'hollowimport', 'ambulance', 'police', 'metro', 'coiu'}
+    local jobs = {'dhs', 'ambulance', 'police', 'metro', 'coiu'}
     local job = ESX.GetPlayerData().job.name
     if jobExists(job, jobs) then
         local blip = createBlip(coords, blipColor, Config.Blips.Name)
@@ -122,7 +122,7 @@ end)
 -- /end command
 RegisterCommand('end', function()
     local job = ESX.GetPlayerData().job.name
-    if jobExists(job, {'police', 'ambulance', 'hollowimport', 'metro', 'coiu'}) then
+    if jobExists(job, {'police', 'ambulance', 'dhs', 'metro', 'coiu'}) then
         TriggerServerEvent('notstomped_emergencyCall:endLatestCall')
     end
 end, false)
