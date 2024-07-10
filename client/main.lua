@@ -72,7 +72,7 @@ end, false)
 
 RegisterCommand('909', function(_, args)
     local message = table.concat(args, " ")
-    handleCall({'hollowimport'}, '909', Config.Blips.Colors['909'], message)
+    handleCall({'dhs'}, '909', Config.Blips.Colors['909'], message)
 end, false)
 
 RegisterCommand('501835720', function(_, args)
