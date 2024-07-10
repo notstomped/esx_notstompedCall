@@ -7,7 +7,7 @@ Config.Notifications = {
         police = "Police is on their way.",
         metro = "Police is on their way.",
         ambulance = "EMS is on their way.",
-        hollowimport = "HI is on their way",
+        dhs = "HS is on their way",
         coiu = "Units are on their way."
     },
     CallRejected = "All unites are tied elsewhere.",
